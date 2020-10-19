@@ -1,0 +1,23 @@
+name: Test Using Image
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Create KinD cluster
+      uses: engineerd/setup-kind@v0.4.0
+      with:
+          version: "v0.8.0"
+    
+    - name: Use tkn
+      uses: gcr.io/tekton-releases/dogfooding/tkn
+      with:
+        entrypoint: /usr/local/bin/tkn
+        args: version
