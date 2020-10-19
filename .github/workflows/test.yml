@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build and Test
+    name: Test tkn
     runs-on: ubuntu-latest
     
     steps:
@@ -16,8 +16,11 @@ jobs:
       with:
           version: "v0.8.0"
     
+    - name: Install Tekton
+      run: kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
+    
     - name: Use tkn
       uses: docker://gcr.io/tekton-releases/dogfooding/tkn
       with:
         entrypoint: /usr/local/bin/tkn
-        args: version
+        args: pr ls
